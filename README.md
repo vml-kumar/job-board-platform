@@ -14,3 +14,10 @@ A full-stack freelance job posting and bidding platform built with:
 cd frontend
 npm install
 npm run dev
+
+### Backend
+
+```bash
+cd backend
+npm install
+npm run dev
