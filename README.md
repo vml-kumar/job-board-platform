@@ -33,6 +33,7 @@ A full-stack web application where recruiters can post jobs and freelancers can 
 | Dev Tools  | VSCode, Postman, GitHub              |
 
 ## 📁 Project Structure
+```
 client/
   └── pages/           → Next.js Pages
   └── components/      → Reusable Components
@@ -41,3 +42,6 @@ server/
   └── controllers/     → Route Handlers (logic)
   └── models/          → Database Queries
   └── routes/          → API Endpoints
+```
+
+---
