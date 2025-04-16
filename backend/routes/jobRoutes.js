@@ -1,12 +1,14 @@
 import express from 'express';
-import { postJob, recruiterJobs, getRecruiterJobs } from '../controllers/jobController.js';
 import { verifyToken } from '../middleware/authMiddleware.js';
+import { postJob, getRecruiterJobs, deleteJob, updateJob, getAllJobs, getAppliedJobs } from '../controllers/jobController.js';
 
 const router = express.Router();
 
 router.post('/post', verifyToken, postJob);
-router.get('/recruiter', verifyToken, recruiterJobs);
 router.get('/myjobs', verifyToken, getRecruiterJobs);
-
-
+router.delete('/:id', verifyToken, deleteJob);
+router.put('/:id', verifyToken, updateJob);
+router.get('/', getAllJobs);
+router.get('/applied', verifyToken, getAppliedJobs);
+  
 export default router;
