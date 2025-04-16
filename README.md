@@ -3,7 +3,7 @@
 A full-stack freelance job posting and bidding platform built with:
 
 - 🔥 Frontend: Next.js + TypeScript + Redux Toolkit + Tailwind CSS
-- ⚙️ Backend: Node.js + Express + MySql (coming soon)
+- ⚙️ Backend: Node.js + Express + MySql
 - 🔐 Features: Auth, Job Posting, Bidding, Profile Management
 
 ## 🚀 Getting Started
