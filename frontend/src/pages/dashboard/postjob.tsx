@@ -11,6 +11,7 @@ const PostJobPage = () => {
     title: '',
     description: '',
     location: '',
+    company: '',
     salary: '',
   });
 
@@ -44,6 +45,15 @@ const PostJobPage = () => {
     <DashboardLayout>
       <h1 className="text-2xl font-bold mb-4">Post a Job</h1>
       <form onSubmit={handleSubmit} className="space-y-4 max-w-xl">
+        <input
+          type="text"
+          name="company"
+          placeholder="Company Name"
+          value={form.company}
+          onChange={handleChange}
+          className="w-full p-2 border border-gray-300 rounded"
+          required
+        />
         <input
           type="text"
           name="title"

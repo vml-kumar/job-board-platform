@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import jobRoutes from './routes/jobRoutes.js';
-import applicationRoutes from './routes/applications.js';
+import applicationRoutes from './routes/applicationRoutes.js';
 
 dotenv.config();
 

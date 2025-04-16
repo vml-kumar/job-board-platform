@@ -33,12 +33,20 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               My Jobs
             </Link>
           </li>
-          <li>
+          {user?.role === 'freelancer' && (
+            <li>
             <Link href="/dashboard/applications" className="text-gray-300 hover:text-white">
-              Applications
+              My Applications
             </Link>
           </li>
-
+          )}
+          {user?.role === 'recruiter' && (
+            <li>
+            <Link href="/dashboard/manageapplications" className="text-gray-300 hover:text-white">
+              Manage Applications
+            </Link>
+          </li>
+          )}
           {user?.role === 'recruiter' && (
             <li>
             <Link href="/dashboard/postjob" className="text-gray-300 hover:text-white">

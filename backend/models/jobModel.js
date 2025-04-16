@@ -2,13 +2,13 @@ import db from '../config/db.js'; // Adjust path as per your structure
 
 // Create Job
 export const createJob = async (jobData) => {
-  const { title, description, location, salary, recruiter_id } = jobData;
+  const { company, title, description, location, salary, recruiter_id } = jobData;
 
   const query = `
-    INSERT INTO jobs (title, description, location, salary, recruiter_id, created_at)
-    VALUES (?, ?, ?, ?, ?, NOW())
+    INSERT INTO jobs (recruiter_id, title, description, company, location, salary, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, NOW())
   `;
-  const [result] = await db.query(query, [title, description, location, salary, recruiter_id]);
+  const [result] = await db.query(query, [recruiter_id, title, description, company, location, salary]);
   return result.insertId;
 };
 

@@ -12,14 +12,14 @@ import {
 // POST a new job
 export const postJob = async (req, res) => {
   try {
-    const { title, description, location, salary } = req.body;
+    const { title, description, location, salary, company} = req.body;
     const recruiter_id = req.user.id;
 
-    if (!title || !description || !location || !salary) {
+    if (!title || !description || !location || !salary || !company) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const jobId = await createJob({ title, description, location, salary, recruiter_id });
+    const jobId = await createJob({ company, title, description, location, salary, recruiter_id });
 
     return res.status(201).json({ message: 'Job posted successfully', jobId });
   } catch (error) {
