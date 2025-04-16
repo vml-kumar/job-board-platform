@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('freelancer'); // default role
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +23,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setError('');
 
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword || !role) {
       setError('Please fill out all fields');
       return;
     }
@@ -40,12 +41,12 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
-
+    
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, role }),
       });
 
       const data = await response.json();
@@ -75,11 +76,10 @@ export default function RegisterPage() {
               <input
                 type="text"
                 id="name"
-                name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all ease-in-out duration-200 hover:border-indigo-500"
+                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm"
                 placeholder="Enter your name"
               />
             </div>
@@ -88,24 +88,35 @@ export default function RegisterPage() {
               <input
                 type="email"
                 id="email"
-                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all ease-in-out duration-200 hover:border-indigo-500"
+                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm"
                 placeholder="Enter your email"
               />
+            </div>
+            <div>
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700">Are You?</label>
+              <select
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm"
+              >
+                <option value="freelancer">Freelancer</option>
+                <option value="recruiter">Recruiter</option>
+              </select>
             </div>
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
               <input
                 type="password"
                 id="password"
-                name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all ease-in-out duration-200 hover:border-indigo-500"
+                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm"
                 placeholder="Enter your password"
               />
             </div>
@@ -114,11 +125,10 @@ export default function RegisterPage() {
               <input
                 type="password"
                 id="confirmPassword"
-                name="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all ease-in-out duration-200 hover:border-indigo-500"
+                className="w-full p-4 mt-1 border border-gray-300 rounded-lg shadow-sm"
                 placeholder="Confirm your password"
               />
             </div>

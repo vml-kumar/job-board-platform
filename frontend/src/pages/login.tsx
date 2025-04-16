@@ -4,18 +4,19 @@ import Link from 'next/link'
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/slices/authSlice';
 import { AppDispatch } from '../redux/store';
+import { useRouter } from 'next/router';
 
 export default function LoginPage() {
   const dispatch = useDispatch<AppDispatch>(); // Type-safe dispatch
-
+  const router = useRouter();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+   
+    const response = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -23,7 +24,16 @@ export default function LoginPage() {
 
     if (response.ok) {
       const data = await response.json();
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
       dispatch(setUser({ user: data.user, token: data.token }));
+     
+      if (data.user.role === 'freelancer') {
+        router.push('/dashboard');
+      } else if (data.user.role === 'recruiter') {
+        router.push('/dashboard');
+      }
+      
       alert('Login successful');
     } else {
       setError('Invalid credentials');
