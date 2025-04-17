@@ -40,6 +40,8 @@ A full-stack web application where recruiters can post jobs and freelancers can 
 ![ApplicationPage](https://github.com/user-attachments/assets/d1fe0d10-8822-4320-abcd-2f293e341ea8)
 ![FindJobsPage](https://github.com/user-attachments/assets/3a67e939-645b-46da-a687-573b38eef541)
 
-
+> ⚠️ **License Notice:**  
+> This project is protected under a proprietary license.  
+> Reuse, redistribution, or modification is **not allowed** without explicit permission from the author.
 
 
