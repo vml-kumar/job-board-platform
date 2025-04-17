@@ -33,3 +33,13 @@ A full-stack web application where recruiters can post jobs and freelancers can 
 | Dev Tools  | VSCode, Postman, GitHub              |
 -----------------------------------------------------
 
+## 🔍 Screenshorts
+![HomePage](https://github.com/user-attachments/assets/395f91f2-bdab-411c-ad97-65cec916e140)
+![LoginPage](https://github.com/user-attachments/assets/a966031a-aa24-4f6c-8caf-226eccc87caa)
+![RegisterPage](https://github.com/user-attachments/assets/d6b7eb21-cb0e-4507-9e02-bd8b864bc6fe)
+![ApplicationPage](https://github.com/user-attachments/assets/d1fe0d10-8822-4320-abcd-2f293e341ea8)
+![FindJobsPage](https://github.com/user-attachments/assets/3a67e939-645b-46da-a687-573b38eef541)
+
+
+
+
