@@ -42,7 +42,7 @@ export default function LoginPage() {
 
   return (
     <Layout>
-      <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="flex justify-center items-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gray-100">
         <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 ease-in-out">
           <h2 className="text-3xl font-semibold text-center mb-6 text-indigo-600">Login</h2>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}

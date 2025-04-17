@@ -1,12 +1,13 @@
-// pages/dashboard/post-job.tsx
-
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { withAuth } from '@/utils/withAuth';
+import axiosInstance from '@/utils/axiosInstance';
 
 const PostJobPage = () => {
   const router = useRouter();
+  const token = localStorage.getItem('token');
+
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -21,26 +22,19 @@ const PostJobPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-
-    const response = await fetch('/api/jobs/post', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(form),
-    });
-
-    const data = await response.json();
-    if (response.ok) {
+    try {
+      const response = await axiosInstance.post('/jobs/post', form, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       alert('Job posted!');
       router.push('/dashboard/myjobs'); // redirect to job listing
-    } else {
-      alert(data.message || 'Something went wrong');
+    } catch (error: any) {
+      console.error('Error posting job:', error);
+      const errorMsg = error.response?.data?.message || 'Something went wrong';
+      alert(errorMsg);
     }
   };
-
+  
   return (
     <DashboardLayout>
       <h1 className="text-2xl font-bold mb-4">Post a Job</h1>

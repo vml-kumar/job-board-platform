@@ -1,10 +1,21 @@
-import Layout from '@/components/Layout'
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
+import HeroSection from '@/components/home/Hero';
+import FeaturesSection from '@/components/home/Features';
+import CallToAction from '@/components/home/CallToAction';
+import HowItWorks from '@/components/home/HowItWorks';
 
 export default function Home() {
   return (
-    <Layout>
-      <h1 className="text-3xl font-bold text-center mt-10">Welcome to FreelancerHub</h1>
-      <p className="text-center mt-4 text-gray-600">Find freelance jobs or hire talent.</p>
-    </Layout>
-  )
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        <HeroSection />
+        <FeaturesSection />
+        <HowItWorks />
+        <CallToAction />
+      </main>
+      <Footer />
+    </div>
+  );
 }

@@ -3,8 +3,8 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { withAuth } from '@/utils/withAuth';
 import EditJobModal from '@/components/dashboard/EditJobModal';
 import useDebounce from '@/hooks/useDebounce';
-
 import { Job } from '@/types/job';
+import axiosInstance from '@/utils/axiosInstance';
 
 const MyJobsPage = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -14,64 +14,70 @@ const MyJobsPage = () => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [jobToDelete, setJobToDelete] = useState<Job | null>(null);
- 
+  const token = localStorage.getItem('token');
   const debouncedSearch = useDebounce(search, 500);
- 
+
   const handleEdit = (job: Job) => {
     setSelectedJob(job);
     setIsModalOpen(true);
   };
 
   const handleSaveEdit = async (updatedJob: Job) => {
-    const token = localStorage.getItem('token');
-    const res = await fetch(`/api/jobs/${updatedJob.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(updatedJob),
-    });
-  
-    if (res.ok) {
-      setJobs((prev) =>
-        prev.map((job) => (job.id === updatedJob.id ? { ...job, ...updatedJob } : job))
-      );
-      setIsModalOpen(false);
+    try {
+      const res = await axiosInstance.put(`/jobs/${updatedJob.id}`, updatedJob, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        setJobs((prev) =>
+          prev.map((job) => (job.id === updatedJob.id ? { ...job, ...updatedJob } : job))
+        );
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.error('Error updating job:', error);
     }
   };
 
   const handleDelete = async (jobId: number) => {
     const confirm = window.confirm("Are you sure you want to delete this job?");
     if (!confirm) return;
-  
-    const token = localStorage.getItem('token');
-  
     const res = await fetch(`/api/jobs/${jobId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  
+
     if (res.ok) {
       setJobs((prev) => prev.filter((job) => job.id !== jobId));
     } else {
       alert("Failed to delete job.");
     }
   };
-  
+
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/jobs/myjobs?search=${encodeURIComponent(search)}&page=${page}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      try {
+        const res = await axiosInstance.get(`/jobs/myjobs`, {
+          params: {
+            search,
+            page,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      const data = await res.json();
-      setJobs(data.jobs);
-      setTotalPages(data.totalPages > 0 ? data.totalPages : 1);
+        const data = res.data;
+        setJobs(data.jobs);
+        setTotalPages(data.totalPages > 0 ? data.totalPages : 1);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
     };
 
     fetchJobs();
@@ -135,7 +141,7 @@ const MyJobsPage = () => {
             )}
           </tbody>
         </table>
-        
+
       </div>
 
       {/* Pagination */}

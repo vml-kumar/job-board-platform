@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import ApplyJobModal from '@/components/job/ApplyJobModal';
+import axiosInstance from '@/utils/axiosInstance';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 type Job = {
   id: number;
@@ -18,7 +21,8 @@ const FindJobsPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [appliedJobs, setAppliedJobs] = useState<number[]>([]);
-
+  const token = useSelector((state: RootState) => state.auth.token);
+ 
   const handleApplyClick = (jobId: number) => {
     setSelectedJobId(jobId);
     setIsApplyOpen(true);
@@ -26,35 +30,46 @@ const FindJobsPage = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/jobs?search=${encodeURIComponent(search)}&page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      setJobs(data.jobs);
-      setTotalPages(data.totalPages > 0 ? data.totalPages : 1);
+      try {
+        const res = await axiosInstance.get(`/jobs`, {
+          params: {
+            search,
+            page,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        const data = res.data;
+        setJobs(data.jobs);
+        setTotalPages(data.totalPages > 0 ? data.totalPages : 1);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
     };
-
+  
     fetchJobs();
   }, [search, page]);
 
   useEffect(() => {
     const fetchAppliedJobs = async () => {
-      const token = localStorage.getItem('token');
-      const res = await fetch('/api/jobs/applied', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-  
-      if (res.ok) {
-        const data = await res.json();
-        setAppliedJobs(data.appliedJobIds);
+      try {
+        const res = await axiosInstance.get('/jobs/applied', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        console.log(res.data.appliedJobIds);
+        setAppliedJobs(res.data.appliedJobIds);
+      } catch (error) {
+        console.error('Error fetching applications:', error);
       }
     };
-  
+
     fetchAppliedJobs();
-  }, []);
+  }, [token]);
 
   return (
     <DashboardLayout>

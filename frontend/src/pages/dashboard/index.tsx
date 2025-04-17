@@ -1,36 +1,33 @@
-// pages/dashboard/index.tsx
-
 import { useEffect, useState } from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { withAuth } from '@/utils/withAuth';
 
 type FreelancerStats = {
-    totalApplications: number;
-    messages: number;
-    activeJobs: number;
-  };
-  
-  type RecruiterStats = {
-    totalJobsPosted: number;
-    applicants: number;
-    jobStatus: string;
-  };
-  
+  totalApplications: number;
+  messages: number;
+  activeJobs: number;
+};
+
+type RecruiterStats = {
+  totalJobsPosted: number;
+  applicants: number;
+  jobStatus: string;
+};
+
 type DashboardStats = Partial<FreelancerStats & RecruiterStats>;
 
 type User = {
-    name: string;
-    email: string;
-    role: 'freelancer' | 'recruiter';
-  };
-  
-const DashboardPage = ({ user }: { user: User }) => {
-   const [stats, setStats] = useState<DashboardStats | null>(null);
+  name: string;
+  email: string;
+  role: 'freelancer' | 'recruiter';
+};
 
+const DashboardPage = ({ user }: { user: User }) => {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchDashboardData = async () => {
-      const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:5000/api/dashboard/overview', {
         headers: {
           Authorization: `Bearer ${token}`,

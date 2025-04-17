@@ -20,10 +20,10 @@ type Application = {
 
 const ApplicationsPage = ({ user }: { user: User }) => {
   const [applications, setApplications] = useState<Application[]>([]);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const token = localStorage.getItem('token');
       const res = await fetch('/api/applications/myapplications', {
         headers: {
           Authorization: `Bearer ${token}`,

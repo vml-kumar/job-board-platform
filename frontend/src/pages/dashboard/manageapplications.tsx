@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { withAuth } from '@/utils/withAuth';
+import axiosInstance from '@/utils/axiosInstance';
 
 type Application = {
   application_id: number;
@@ -15,42 +16,46 @@ type Application = {
 const ManageApplicationsPage = () => {
   const [applications, setApplications] = useState<Application[]>([]);
   const token = localStorage.getItem('token');
+
   useEffect(() => {
     const fetchApplications = async () => {
-
-      const res = await fetch('/api/applications/recruiter', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        console.log(data.applications);
-        
-        setApplications(data.applications);
+      try {
+        const res = await axiosInstance.get('/applications/recruiter', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        console.log(res.data.applications);
+        setApplications(res.data.applications);
+      } catch (error) {
+        console.error('Error fetching applications:', error);
       }
     };
-
+  
     fetchApplications();
   }, []);
 
   const handleStatusUpdate = async (applicationId: number, status: 'Approved' | 'Rejected') => {
-    const res = await fetch(`/api/applications/${applicationId}/status`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ status }),
-    });
+    try {
+      await axiosInstance.put(
+        `/applications/${applicationId}/status`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
   
-    if (res.ok) {
+      // Update local state if successful
       setApplications((prev) =>
         prev.map((app) =>
           app.application_id === applicationId ? { ...app, status } : app
         )
       );
+    } catch (error) {
+      console.error('Failed to update status:', error);
     }
   };
 

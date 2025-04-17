@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 type ApplyJobModalProps = {
   jobId: number | null;
@@ -11,13 +13,13 @@ const ApplyJobModal = ({ jobId, isOpen, onClose, onSuccess }: ApplyJobModalProps
   const [coverLetter, setCoverLetter] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const token = useSelector((state: RootState) => state.auth.token);
 
   const handleApply = async () => {
     setLoading(true);
     setError('');
 
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch('/api/applications', {
         method: 'POST',
         headers: {
