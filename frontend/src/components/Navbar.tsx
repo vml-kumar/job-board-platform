@@ -5,7 +5,7 @@ export default function Navbar() {
     <nav className="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
       {/* Logo Section */}
       <Link href="/" className="text-xl font-bold text-blue-600">
-        JobForge
+      JobMarketPlace
       </Link>
 
       {/* Navigation Links */}
