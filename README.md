@@ -40,10 +40,10 @@
 
 ## 🖼️ Screenshots
 ![HomePage](https://github.com/user-attachments/assets/395f91f2-bdab-411c-ad97-65cec916e140)
-![LoginPage](https://github.com/user-attachments/assets/a966031a-aa24-4f6c-8caf-226eccc87caa)
-![RegisterPage](https://github.com/user-attachments/assets/d6b7eb21-cb0e-4507-9e02-bd8b864bc6fe)
-![ApplicationPage](https://github.com/user-attachments/assets/d1fe0d10-8822-4320-abcd-2f293e341ea8)
-![FindJobsPage](https://github.com/user-attachments/assets/3a67e939-645b-46da-a687-573b38eef541)
+![LoginPage](https://github.com/user-attachments/assets/13818d0b-0ae7-4c0e-b9d8-1d4280867ee8)
+![RegisterPage](https://github.com/user-attachments/assets/e2b33872-7eba-406c-be97-955638572c98)
+![ApplicationPage](https://github.com/user-attachments/assets/45c48137-da32-4ca7-9fef-2a42b6e7c55b)
+![FindJobsPage](https://github.com/user-attachments/assets/df12cbe8-9e21-40f6-9369-8276c072802f)
 
 > ⚠️ **License Notice:**  
 > This project is protected under a proprietary license.  
