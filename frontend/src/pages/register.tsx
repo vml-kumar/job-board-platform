@@ -138,7 +138,7 @@ export default function RegisterPage() {
               disabled={loading}
               className="w-full py-4 mt-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-all ease-in-out duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {loading ? 'Registering...' : 'Register'}
+              {loading ? 'Sign Up...' : 'Sign Up'}
             </button>
             <div className="mt-4 text-center">
               <span className="text-sm text-gray-600">Already have an account? </span>
