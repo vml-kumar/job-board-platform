@@ -66,7 +66,7 @@ const ManageApplicationsPage = () => {
       {applications.length === 0 ? (
         <p className="text-gray-500">No applications yet.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="bg-white shadow p-6 rounded-lg space-y-4">
           {applications.map((app) => (
             <div key={app.application_id} className="border p-4 rounded shadow">
               <h2 className="text-lg font-semibold">{app.job_title}</h2>

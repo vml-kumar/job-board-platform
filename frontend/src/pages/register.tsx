@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
+import Footer from '@/components/common/Footer';
 import Link from 'next/link'
 
 export default function RegisterPage() {
@@ -146,6 +147,8 @@ export default function RegisterPage() {
           </form>
         </div>
       </div>
+      {/* Footer */}
+      <Footer />
     </Layout>
   );
 }

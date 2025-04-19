@@ -90,7 +90,7 @@ const FindJobsPage = () => {
       {jobs.length === 0 ? (
         <p className="text-gray-500">No jobs found.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="bg-white shadow p-6 rounded-lg space-y-4">
           {jobs.map((job) => (
             <div key={job.id} className="border p-4 rounded shadow">
               <h2 className="text-xl font-semibold">{job.title}</h2>

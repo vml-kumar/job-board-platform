@@ -38,7 +38,7 @@ const PostJobPage = () => {
   return (
     <DashboardLayout>
       <h1 className="text-2xl font-bold mb-4">Post a Job</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 max-w-xl">
+      <form onSubmit={handleSubmit} className="space-y-4 bg-white shadow p-6 rounded-lg">
         <input
           type="text"
           name="company"
