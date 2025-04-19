@@ -1,6 +1,6 @@
-# 🚀 JobForge – Freelancer Job Board Platform
+# 🚀 JobMarketPlace – Freelancer Job Board Platform
 
-**JobForge** is a full-stack web application that connects recruiters and freelancers through a modern job board experience. Recruiters can post job listings, and freelancers can apply seamlessly with cover letters and manage their applications.
+**JobMarketPlace** is a full-stack web application that connects recruiters and freelancers through a modern job board experience. Recruiters can post job listings, and freelancers can apply seamlessly with cover letters and manage their applications.
 
 ### 🛠 Built With:
 
@@ -39,11 +39,11 @@
 -----------------------------------------------------
 
 ## 🖼️ Screenshots
-![HomePage](https://github.com/user-attachments/assets/395f91f2-bdab-411c-ad97-65cec916e140)
-![LoginPage](https://github.com/user-attachments/assets/13818d0b-0ae7-4c0e-b9d8-1d4280867ee8)
-![RegisterPage](https://github.com/user-attachments/assets/e2b33872-7eba-406c-be97-955638572c98)
-![ApplicationPage](https://github.com/user-attachments/assets/45c48137-da32-4ca7-9fef-2a42b6e7c55b)
-![FindJobsPage](https://github.com/user-attachments/assets/df12cbe8-9e21-40f6-9369-8276c072802f)
+![HomePage](https://github.com/user-attachments/assets/22cbaac5-6d29-437a-b896-e9e946ffe830)
+![LoginPage](https://github.com/user-attachments/assets/287ef4a6-54bb-4420-b2a5-d0b411c52140)
+![RegisterPage](https://github.com/user-attachments/assets/25f08857-6a06-4e52-945e-4a6246cf00de)
+![ApplicationPage](https://github.com/user-attachments/assets/db41a5da-224e-47eb-b251-eb933100bccf)
+![FindJobsPage](https://github.com/user-attachments/assets/cf28662d-7f32-4244-b385-b6a6bec477c6)
 
 > ⚠️ **License Notice:**  
 > This project is protected under a proprietary license.  
