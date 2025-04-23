@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type User = {
   name: string;
@@ -14,13 +14,22 @@ export function withAuth<P extends { user: User }>(WrappedComponent: React.Compo
   return function ProtectedComponent(props: Omit<P, 'user'>) {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const router = useRouter();
+    const [isReady, setIsReady] = useState(false);
 
-    if (!token && typeof window !== 'undefined') {
-      router.replace('/login');
-      return null;
-    }
-    
-    if (!user) {
+    useEffect(() => {
+      // Wait until redux-persist rehydrates
+      if (typeof window !== 'undefined') {
+        setIsReady(true);
+      }
+    }, []);
+
+    useEffect(() => {
+      if (isReady && !token) {
+        router.replace('/login');
+      }
+    }, [isReady, token]);
+
+    if (!isReady || !user) {
       return <div>Loading...</div>;
     }
 

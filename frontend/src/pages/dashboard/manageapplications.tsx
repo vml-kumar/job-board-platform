@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { withAuth } from '@/utils/withAuth';
 import axiosInstance from '@/utils/axiosInstance';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 type Application = {
   application_id: number;
@@ -15,7 +17,7 @@ type Application = {
 
 const ManageApplicationsPage = () => {
   const [applications, setApplications] = useState<Application[]>([]);
-  const token = localStorage.getItem('token');
+  const { token } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     const fetchApplications = async () => {

@@ -3,10 +3,12 @@ import { useRouter } from 'next/router';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { withAuth } from '@/utils/withAuth';
 import axiosInstance from '@/utils/axiosInstance';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 const PostJobPage = () => {
   const router = useRouter();
-  const token = localStorage.getItem('token');
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const [form, setForm] = useState({
     title: '',

@@ -48,9 +48,10 @@ const FindJobsPage = () => {
         console.error('Error fetching jobs:', error);
       }
     };
-  
-    fetchJobs();
-  }, [search, page]);
+    if (token) {
+      fetchJobs();
+    }
+  }, [token ,search, page]);
 
   useEffect(() => {
     const fetchAppliedJobs = async () => {
@@ -67,8 +68,10 @@ const FindJobsPage = () => {
         console.error('Error fetching applications:', error);
       }
     };
-
-    fetchAppliedJobs();
+   
+    if (token) {
+      fetchAppliedJobs();
+    }
   }, [token]);
 
   return (

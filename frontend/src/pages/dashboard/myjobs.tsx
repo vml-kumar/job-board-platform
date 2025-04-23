@@ -5,6 +5,8 @@ import EditJobModal from '@/components/dashboard/EditJobModal';
 import useDebounce from '@/hooks/useDebounce';
 import { Job } from '@/types/job';
 import axiosInstance from '@/utils/axiosInstance';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 const MyJobsPage = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -14,8 +16,8 @@ const MyJobsPage = () => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [jobToDelete, setJobToDelete] = useState<Job | null>(null);
-  const token = localStorage.getItem('token');
   const debouncedSearch = useDebounce(search, 500);
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const handleEdit = (job: Job) => {
     setSelectedJob(job);

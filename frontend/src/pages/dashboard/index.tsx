@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { withAuth } from '@/utils/withAuth';
+import { RootState } from '@/redux/store';
 
 type FreelancerStats = {
   totalApplications: number;
@@ -24,25 +26,31 @@ type User = {
 
 const DashboardPage = ({ user }: { user: User }) => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
-  const token = localStorage.getItem('token');
+  const token = useSelector((state: RootState) => state.auth.token);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
-      const response = await fetch('http://localhost:5000/api/dashboard/overview', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setStats(data.stats);
-      } else {
-        // Handle error
+      try {
+        const response = await fetch('/api/dashboard/overview', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setStats(data.stats);
+        } else {
+          console.error('Failed to fetch dashboard data');
+        }
+      } catch (error) {
+        console.error('Dashboard fetch error:', error);
       }
     };
 
-    fetchDashboardData();
-  }, []);
+    if (token) {
+      fetchDashboardData();
+    }
+  }, [token]);
 
   if (!stats) {
     return <div>Loading...</div>;
@@ -54,40 +62,28 @@ const DashboardPage = ({ user }: { user: User }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {user.role === 'freelancer' && (
           <>
-            <div className="bg-white p-4 shadow rounded-lg">
-              <h3 className="text-xl font-semibold">Total Applications</h3>
-              <p className="text-gray-500">{stats.totalApplications}</p>
-            </div>
-            <div className="bg-white p-4 shadow rounded-lg">
-              <h3 className="text-xl font-semibold">Messages</h3>
-              <p className="text-gray-500">{stats.messages}</p>
-            </div>
-            <div className="bg-white p-4 shadow rounded-lg">
-              <h3 className="text-xl font-semibold">Active Jobs</h3>
-              <p className="text-gray-500">{stats.activeJobs}</p>
-            </div>
+            <StatCard label="Total Applications" value={stats.totalApplications} />
+            <StatCard label="Messages" value={stats.messages} />
+            <StatCard label="Active Jobs" value={stats.activeJobs} />
           </>
         )}
-
         {user.role === 'recruiter' && (
           <>
-            <div className="bg-white p-4 shadow rounded-lg">
-              <h3 className="text-xl font-semibold">Total Jobs Posted</h3>
-              <p className="text-gray-500">{stats.totalJobsPosted}</p>
-            </div>
-            <div className="bg-white p-4 shadow rounded-lg">
-              <h3 className="text-xl font-semibold">Applicants</h3>
-              <p className="text-gray-500">{stats.applicants}</p>
-            </div>
-            <div className="bg-white p-4 shadow rounded-lg">
-              <h3 className="text-xl font-semibold">Job Status</h3>
-              <p className="text-gray-500">{stats.jobStatus}</p>
-            </div>
+            <StatCard label="Total Jobs Posted" value={stats.totalJobsPosted} />
+            <StatCard label="Applicants" value={stats.applicants} />
+            <StatCard label="Job Status" value={stats.jobStatus} />
           </>
         )}
       </div>
     </DashboardLayout>
   );
 };
+
+const StatCard = ({ label, value }: { label: string; value: string | number | undefined }) => (
+  <div className="bg-white p-4 shadow rounded-lg">
+    <h3 className="text-xl font-semibold">{label}</h3>
+    <p className="text-gray-500">{value ?? 0}</p>
+  </div>
+);
 
 export default withAuth(DashboardPage);
