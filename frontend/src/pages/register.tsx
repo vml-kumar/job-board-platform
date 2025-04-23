@@ -1,17 +1,30 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import Layout from '@/components/Layout'
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Layout from '@/components/Layout';
 import Footer from '@/components/common/Footer';
-import Link from 'next/link'
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store'; // <- Import RootState for selector
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { token, user } = useSelector((state: RootState) => state.auth); // <- Access token and user
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (token && user) {
+      router.replace('/dashboard/');
+    } else {
+      setCheckingAuth(false);
+    }
+  }, [token, user, router]);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('freelancer'); // default role
+  const [role, setRole] = useState('freelancer');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +55,7 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
-    
+
     try {
       const response = await fetch('/api/auth/register', {
         method: 'POST',
@@ -65,10 +78,12 @@ export default function RegisterPage() {
     }
   };
 
+  if (checkingAuth) return null;
+  
   return (
     <Layout>
       <div className="flex justify-center items-center min-h-screen py-12 bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <h2 className="text-3xl font-semibold text-center mb-6 text-indigo-600">Create an Account</h2>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -147,7 +162,6 @@ export default function RegisterPage() {
           </form>
         </div>
       </div>
-      {/* Footer */}
       <Footer />
     </Layout>
   );
