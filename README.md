@@ -1,4 +1,4 @@
-# 🚀 JobMarketPlace – Freelancer Job Board Platform
+# 🚀 JobMarketPlace – Job Board Platform
 
 **JobMarketPlace** is a full-stack web application that connects recruiters and freelancers through a modern job board experience. Recruiters can post job listings, and freelancers can apply seamlessly with cover letters and manage their applications.
 
